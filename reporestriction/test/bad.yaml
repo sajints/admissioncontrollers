@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: swiss-army-knife-disallowed
+spec:
+  containers:
+    - name: swiss-army-knife
+      image: rancherlabs/swiss-army-knife:latest
+      resources:
+        limits:
+          cpu: "100m"
+          memory: "30Mi"

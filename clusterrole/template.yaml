@@ -1,0 +1,34 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8srestrictrolebindings
+  annotations:
+    description: Disallows associating ClusterRole.
+spec:
+  crd:
+    spec:
+      names:
+        kind: k8srestrictrolebindings
+      validation:
+        # Schema for the `parameters` field
+        openAPIV3Schema:
+          type: object
+          properties:
+            allowedRoles:
+              description: >-
+                Dont allow clusterroles
+              type: array
+              items:
+                type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8srestrictrolebindings
+
+        violation[{"msg": msg}] {
+          sprintf(msg)
+          
+          satisfied := [ input.parameters.kind[_] != "clusterrole"]
+          not any(satisfied)
+          msg := sprintf("container <%v> has an invalid image repo <%v>, allowed repos are %v", [container.name, container.image, input.parameters.repos])
+        }

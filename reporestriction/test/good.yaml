@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: swiss-army-knife-allowed
+spec:
+  containers:
+    - name: swiss-army-knife
+      image: myhelmacrsajin.azurecr.io/azure-vote-front:v1
+      resources:
+        limits:
+          cpu: "100m"
+          memory: "30Mi"

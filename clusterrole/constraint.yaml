@@ -1,0 +1,13 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRestrictRoleBindings
+metadata:
+  name: restrict-clusteradmin-rolebindings-sample
+spec:
+  enforcementAction: dryrun
+  parameters:
+    allowedRoleRef:
+    - apiGroup: rbac.authorization.k8s.io
+      kind: Role
+    restrictedRoleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
